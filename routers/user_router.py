@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from auth.token_handler import verify_token
 from services.user_service import get_users, create_user, login
 from model.user_model import User
 
@@ -8,7 +9,7 @@ router = APIRouter(
 )
 
 @router.get("")
-async def users():
+async def users(data= Depends(verify_token)):
     return await get_users()
 
 @router.post("")
