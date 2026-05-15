@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.exceptions import HTTPException
-
-from routers.user_router import router
+from routers.anime_router import router as anime_router
+from routers.user_router import router as user_router
 from fastapi.middleware.cors import CORSMiddleware
 from exceptions.handler import (
     http_exception_handler
@@ -10,6 +10,13 @@ from exceptions.handler import (
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500",
+        "http://localhost:5500"],  
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_exception_handler(
     HTTPException,
@@ -17,11 +24,6 @@ app.add_exception_handler(
 )
 
 
-app.include_router(router)
+app.include_router(user_router)
+app.include_router(anime_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500"],  
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
