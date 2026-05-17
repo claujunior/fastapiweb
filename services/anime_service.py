@@ -20,3 +20,12 @@ async def animes_recente(page):
     return response.json()
     
 
+async def search_animes(search):
+    response = requests.get(
+        "https://api.myanimelist.net/v2/anime",
+        headers=HEADERS,
+        params={"limit": 5,
+    "q": search}
+    )
+
+    return response.json()
